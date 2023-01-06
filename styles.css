@@ -4,13 +4,13 @@
 }
 
 body {
-   padding: .6em;
+   padding: 0.6em;
 }
 
 fieldset {
-   margin: .5em 0;
-   padding: .7em;
-   border-radius: .2em;
+   margin: 0.5em 0;
+   padding: 0.7em;
+   border-radius: 0.2em;
    border-style: solid;
    border-color: #666;
 }
@@ -19,66 +19,66 @@ legend {
    background-color: #222;
    color: #fff;
    padding: 3px 6px;
-   border-radius: .2em;
+   border-radius: 0.2em;
 }
 
 input {
-   padding: .3em .6em;
-   border: solid .1em #666;
-   border-radius: .2em;
-   transition: .15s;
+   padding: 0.3em 0.6em;
+   border: solid 0.1em #666;
+   border-radius: 0.2em;
+   transition: 0.15s;
 }
 
 input:focus {
-   border: solid .1em transparent;
+   border: solid 0.1em transparent;
    outline: none;
-   box-shadow: 0 0 0 .2em #ddd;
+   box-shadow: 0 0 0 0.2em #ddd;
 }
 
 button {
-   padding: .3em .6em;
-   margin: .2em .3em;
+   padding: 0.3em 0.6em;
+   margin: 0.2em 0.3em;
    font-size: 95%;
    background-color: #eee;
    border: none;
-   border-radius: .2em;
-   box-shadow: 0 .08em .2em #ccc;
-   transition: .15s;
+   border-radius: 0.2em;
+   box-shadow: 0 0.08em 0.2em #ccc;
+   transition: 0.15s;
 }
 
 button:hover {
-   box-shadow: 0 .1em .3em #bbb;
+   box-shadow: 0 0.1em 0.3em #bbb;
 }
 
 button:active {
    background-color: #f5f5f5;
-   box-shadow: 0 .08em .3em #ddd;
+   box-shadow: 0 0.08em 0.3em #ddd;
 }
 
 button:focus {
    outline: none;
-   box-shadow: 0 0 0 .2em #bbb;
+   box-shadow: 0 0 0 0.2em #bbb;
 }
 
 button:disabled {
    background-color: #ddd;
-   box-shadow: 0 .08em .2em #aaa;
+   box-shadow: 0 0.08em 0.2em #aaa;
 }
 
 /* Specific Styles */
 .activity {
    position: relative;
-   padding: .4em .7em;
-   margin: .2em 0;
-   box-shadow: 0 .1em .5em #ddd;
-   border-radius: .2em;
+   padding: 0.4em 0.7em;
+   margin: 0.2em 0;
+   box-shadow: 0 0.1em 0.5em #ddd;
+   border-radius: 0.2em;
 }
 
 .avgtimeblock {
-   padding: .4em .7em;
-   margin: .3em 0;
-   border: solid .12em #eee;
-   border-radius: .2em;
+   padding: 0.4em 0.7em;
+   margin: 0.3em 0;
+   border: solid 0.12em #eee;
+   border-radius: 0.2em;
 }
 
 .controls {
@@ -87,29 +87,32 @@ button:disabled {
    right: 0;
    background-color: #f5f5f5;
    border-radius: 5em;
-   margin: .3em;
-   padding: 0 .3em;
+   margin: 0.3em;
+   padding: 0 0.3em;
 }
 
-.cancelActivity, .finishActivity, .pauseActivity, .continueActivity {
-   margin: .4em .1em;
+.cancelActivity,
+.finishActivity,
+.pauseActivity,
+.continueActivity {
+   margin: 0.4em 0.1em;
    display: inline-flex;
    justify-content: center;
    align-items: center;
    height: 1.2em;
    width: 1.2em;
-   padding: .6em;
-   background-color: #FF584E;
+   padding: 0.6em;
+   background-color: #ff584e;
    color: #fff;
    font-family: monospace;
-   font-size: .8em;
+   font-size: 0.8em;
    border-radius: 50%;
    font-weight: 900;
 }
 
-.pauseActivity { background-color: #5D43FE; }
-.finishActivity { background-color: #40F780; }
-.continueActivity { background-color: #F840BA; }
+.pauseActivity { background-color: #5d43fe; }
+.finishActivity { background-color: #40f780; }
+.continueActivity { background-color: #f840ba; }
 
 .avgtimetxt {
    text-align: center;
@@ -120,12 +123,71 @@ button:disabled {
    color: #222;
 }
 
+.settingsections {
+   position: relative;
+}
+
+.settingsblock button {
+   position: absolute;
+   top: 0;
+   right: 0;
+   margin: 0.17em 0.2em;
+   padding: 0.3em 0.5em;
+   background-color: transparent;
+   color: #222;
+   border-radius: 0.4em;
+   font-family: sans-serif;
+   font-weight: 600;
+   border: solid 0.19em #222;
+   transition: 0.2s;
+}
+
+.settingsblock button:hover {
+   color: #fff;
+   border: solid 0.19em transparent;
+   background-color: #222;
+}
+
+.settingHeaderTxt {
+   font-size: 1.25em;
+   font-weight: 600;
+   line-height: 2em;
+   font-family: sans-serif; /* or cursive */
+   color: #222;
+}
+
+.settingTxt {
+   text-align: center;
+   font-size: 1em;
+   font-weight: 500;
+   line-height: 2em;
+   font-family: sans-serif; /* or cursive */
+   color: #222;
+}
+
 hr {
-   height: .1em;
+   height: 0.1em;
    margin: 1.5em 0;
    border-radius: 5em;
    border: none;
    background-color: #555;
+}
+
+.settingsDivider {
+   height: 0.005em;
+   margin: 0.75em 0;
+}
+
+.complete-summary {
+   margin: 0.4em 0;
+   display: flex;
+   align-items: center;
+   gap: 0.25em;
+}
+
+.completed-activity-summary-icon {
+   font-size: 1.3em;
+   color: #555;
 }
 
 /* Layout */
@@ -136,5 +198,12 @@ hr {
    }
    section:nth-child(odd) {
       margin-right: 1em;
+   }
+}
+
+/* So it won't hurt your eyes ;) */
+@media (prefers-color-scheme: dark) {
+   body {
+      background-color: #eee;
    }
 }

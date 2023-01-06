@@ -4,9 +4,10 @@
    <!-- 
       Activity Log project by Editor Rust
       **Pre-release**
+      When I fix the current problems, it'll be ready for version 0.1.0!
 
       == New Features ==
-      Save, chart, average, polish
+      Settings, collapse multiple activites, more stats, more polish
     -->
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,10 +39,53 @@
       <fieldset>
          <legend>Stats</legend>
          <canvas id="myChart"></canvas>
-         <!--    Will have charts, most common tasks, time on each task, and total time -->
          <hr>
-         <p class="avgtimetxt">Average time for each activity</p>
+         <p class="avgtimetxt">Average & total time for each activity</p>
          <div class="avgtime"></div>
+      </fieldset>
+   </section>
+   <section>
+      <fieldset class="settingsblock">
+         <legend>Settings</legend>
+         <div class="settingsections">
+            <h2 class="settingHeaderTxt">Clear save</h2>
+            <p>Wipe the local save. Clearing your browser cookies will do this too.</p>
+            <button onclick="clearSave()">Clear save</button>
+         </div>
+         <hr class="settingsDivider">
+         <div class="settingsections">
+            <h2 class="settingHeaderTxt">Export save</h2>
+            <p>Exports save in universal JSON format.</p>
+            <p>Note that save will not include settings</p>
+            <input class="exportdata" value="" type="text" style="display: none">
+            <button onclick="exportSave()">Export save</button>
+         </div>
+         <hr class="settingsDivider">
+         <div class="settingsections">
+            <h2 class="settingHeaderTxt">Import save</h2>
+            <p>Imports a save. If you mess with the export, it's your fault if it breaks.</p>
+            <button onclick="importSave()">Import save</button>
+         </div>
+         <hr class="settingsDivider">
+         <div class="settingsections">
+            <h2 class="settingHeaderTxt">Collapse Options</h2>
+            <p>Choose how to collapse your completed tasks:</p>
+            <button onclick="saveCollapseSettings()">Save settings</button>
+            <section class="collapsesettingsparent">
+               <div>
+                  <input type="radio" id="long" name="collapsesettings" value="long">
+                  <label for="long">Long</label>
+               </div>
+               <div>
+                  <input type="radio" id="short" name="collapsesettings" value="short" checked>
+                  <label for="short">Short</label>
+               </div>
+               <div>
+                  <input type="radio" id="none" name="collapsesettings" value="none">
+                  <label for="none">None</label>
+               </div>
+            </section>
+         </div>
       </fieldset>
    </section>
 </body>
