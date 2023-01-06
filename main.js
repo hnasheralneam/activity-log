@@ -33,15 +33,14 @@ let save = setInterval(() => {
 function reinit() {
    activities.forEach((el, i, arr) => { createActivity(el[0], i); });
    // Select the right radio button
-   document.querySelector(`#${settings.collapse}`).checked = true;
+   if (settings.collapse) document.querySelector(`#${settings.collapse}`).checked = true;
 }
 
 function clearSave() {
    if (confirm("Are you sure you want to delete your save?")) {
       activities = [];
       localStorage.setItem("activitytrackersave", JSON.stringify(activities));
-      window.location.href = window.location.href; // Only for codepen
-      // location.reload(); // Normal
+      location.reload();
    }
 }
 
@@ -49,7 +48,7 @@ function exportSave() {
    let txt = document.querySelector(".exportdata");
    txt.value = JSON.stringify(activities);
    txt.select();
-   txt.setSelectionRange(0, 99999); // mobile
+   txt.setSelectionRange(0, 99999); // For mobile
    navigator.clipboard.writeText(txt.value);
    alert("Data saved to clipboard!");
 }
@@ -58,8 +57,7 @@ function importSave() {
    if (confirm("This will delete your current save. Are you sure?")) {
       let inputTxt = prompt("Enter save...");
       activities = JSON.parse(inputTxt);
-      window.location.href = window.location.href; // Only for codepen
-      // location.reload(); // Normal
+      location.reload();
    }
 }
 
@@ -396,10 +394,10 @@ function noSpaces(txt) {
 // Add settings to export
 // Rename tasks
 // About page
+// Transfer to digit.js
 
 /*
 == Things that are broken ==
-// Err on clear cache
 // Multiple tabs mess with save
 // Deleting a task will murder the program
 // I suppose the hacky way I remove spaces is a problem
