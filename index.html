@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <!-- Pre-release -->
+   <!-- 
+      Create, remove, pause, play, and complete activites
+    -->
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="theme-color" content="#222">
+   <link rel="stylesheet" href="styles.css">
+   <title>Activity Log</title>
+</head>
+<body>
+   <fieldset>
+      <legend>Completed Tasks</legend>
+      <p class="activitiesCompleted">No activities are finished</p>
+      <div class="completedActivities"></div>
+   </fieldset>
+   <fieldset>
+      <legend>Tasks in progress</legend>
+      <p class=activityProgressing>No tasks in progress</p>
+      <div class="activitiesProgressing"></div>
+   </fieldset>
+   <fieldset>
+      <legend>Start a new activity</legend>
+      <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
+      <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>
+   </fieldset>
+</body>
+<script src="main.js"></script>
+</html>
