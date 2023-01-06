@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Pre-release -->
    <!-- 
-      Create, remove, pause, play, and complete activites
+      Activity Log project by Editor Rust
+      **Pre-release**
+
+      == New Features ==
+      Save, chart, average, polish
     -->
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta name="theme-color" content="#222">
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
    <link rel="stylesheet" href="styles.css">
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
    <title>Activity Log</title>
 </head>
 <body>
-   <fieldset>
-      <legend>Completed Tasks</legend>
-      <p class="activitiesCompleted">No activities are finished</p>
-      <div class="completedActivities"></div>
-   </fieldset>
-   <fieldset>
-      <legend>Tasks in progress</legend>
-      <p class=activityProgressing>No tasks in progress</p>
-      <div class="activitiesProgressing"></div>
-   </fieldset>
-   <fieldset>
-      <legend>Start a new activity</legend>
-      <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
-      <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>
-   </fieldset>
+   <section>
+      <fieldset>
+         <legend>Completed Tasks</legend>
+         <p class="activitiesCompleted">No activities are finished</p>
+         <div class="completedActivities"></div>
+      </fieldset>
+      <fieldset>
+         <legend>Tasks in progress</legend>
+         <p class=activityProgressing>No tasks in progress</p>
+         <div class="activitiesProgressing"></div>
+      </fieldset>
+   </section>
+   <section>
+      <fieldset>
+         <legend>Start a new activity</legend>
+         <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
+         <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>
+      </fieldset>
+      <fieldset>
+         <legend>Stats</legend>
+         <canvas id="myChart"></canvas>
+         <!--    Will have charts, most common tasks, time on each task, and total time -->
+         <hr>
+         <p class="avgtimetxt">Average time for each activity</p>
+         <div class="avgtime"></div>
+      </fieldset>
+   </section>
 </body>
 <script src="main.js"></script>
 </html>

@@ -74,11 +74,18 @@ button:disabled {
    border-radius: .2em;
 }
 
+.avgtimeblock {
+   padding: .4em .7em;
+   margin: .3em 0;
+   border: solid .12em #eee;
+   border-radius: .2em;
+}
+
 .controls {
    position: absolute;
    top: 0;
    right: 0;
-   background-color: #eee;
+   background-color: #f5f5f5;
    border-radius: 5em;
    margin: .3em;
    padding: 0 .3em;
@@ -91,15 +98,43 @@ button:disabled {
    align-items: center;
    height: 1.2em;
    width: 1.2em;
-   padding: .07em;
-   background-color: #FC3613;
+   padding: .6em;
+   background-color: #FF584E;
    color: #fff;
    font-family: monospace;
-   font-size: 1em;
+   font-size: .8em;
    border-radius: 50%;
    font-weight: 900;
 }
 
-.pauseActivity { background-color: #4022FA; }
-.finishActivity { background-color: #1BF560; }
-.continueActivity { background-color: #F51BAC; }
+.pauseActivity { background-color: #5D43FE; }
+.finishActivity { background-color: #40F780; }
+.continueActivity { background-color: #F840BA; }
+
+.avgtimetxt {
+   text-align: center;
+   font-size: 1.25em;
+   font-weight: 600;
+   line-height: 2em;
+   font-family: sans-serif; /* or cursive */
+   color: #222;
+}
+
+hr {
+   height: .1em;
+   margin: 1.5em 0;
+   border-radius: 5em;
+   border: none;
+   background-color: #555;
+}
+
+/* Layout */
+@media screen and (min-width: 900px) {
+   body {
+      display: grid;
+      grid-template-columns: 50% 50%;
+   }
+   section:nth-child(odd) {
+      margin-right: 1em;
+   }
+}
