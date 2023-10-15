@@ -1,3 +1,5 @@
+// Made by Hamza Nasher-Alneam
+// Last edited October 14 2023
 // ==========================================
 // Init and save
 // ==========================================
@@ -120,10 +122,8 @@ function createActivity(activityName, activity) {
    let elPause = document.createElement("SPAN");
    elPause.classList.add("pauseActivity");
    // Check if paused before styling
-   if (activities[activity][3])
-      elPause.innerHTML = "<span class='material-symbols-rounded'>pause</span>";
-   else
-      elPause.innerHTML = "<span class='material-symbols-rounded'>play_arrow</span>";
+   if (activities[activity][3]) elPause.innerHTML = "<span class='material-symbols-rounded'>pause</span>";
+   else elPause.innerHTML = "<span class='material-symbols-rounded'>play_arrow</span>";
    elPause.onclick = () => {
       if (activities[activity][3]) {
          clearInterval(timerRun);
@@ -140,9 +140,7 @@ function createActivity(activityName, activity) {
    let elFinish = document.createElement("SPAN");
    elFinish.classList.add("finishActivity");
    elFinish.innerHTML = "<span class='material-symbols-rounded'>done</span>";
-   elFinish.onclick = () => {
-      finishActivity();
-   };
+   elFinish.onclick = finishActivity;
    controls.appendChild(elFinish);
    // Remove button
    let elRemove = document.createElement("SPAN");
@@ -177,18 +175,18 @@ function createActivity(activityName, activity) {
    }
    function startInterval() {
       timerRun = setInterval(() => {
-         activities[activity][1] = Math.round(10 * timer) / 10;
-         let seconds = Math.round(10 * (timer += 0.1)) / 10;
-         let minutes = Math.floor(seconds / 60);
-         seconds = Math.round(10 * (seconds -= minutes * 60)) / 10;
-         if (minutes > 0)
-            elCount.textContent = minutes + " minute(s) and " + seconds + " seconds";
-         else elCount.textContent = seconds + " second(s)";
+         if (activities[activity]) {
+            activities[activity][1] = Math.round(10 * timer) / 10;
+            let seconds = Math.round(10 * (timer += 0.1)) / 10;
+            let minutes = Math.floor(seconds / 60);
+            seconds = Math.round(10 * (seconds -= minutes * 60)) / 10;
+            if (minutes > 0) elCount.textContent = minutes + " minute(s) and " + seconds + " seconds";
+            else elCount.textContent = seconds + " second(s)";
+         }
+         // If it dosen't exist, that means somthing before it has been deleted, which means the index has moved down one
+         else activity--;
       }, 100);
    }
-   // save fixed
-   // hana odeufhaiubyfe khabjfagvj
-
    function finishActivity() {
       // Finish time if not from save 
       if (activities[activity][4]["finish"] == undefined) activities[activity][4]["finish"] = new Date();
@@ -271,11 +269,92 @@ function createActivity(activityName, activity) {
       // Set state as complete
       activities[activity][2] = "complete";
       // Check if no tasks running
-      if (!document.querySelector(".activitiesProgressing").firstChild)
-         document.querySelector(".activityProgressing").textContent =
-            "No tasks in progress";
+      if (!document.querySelector(".activitiesProgressing").firstChild) document.querySelector(".activityProgressing").textContent = "No tasks in progress";
    }
 }
+
+// ==========================================
+// Suggestions
+// ==========================================
+
+function generateSuggestions() {
+   let ranks = [];
+   let labels = [];
+   let data = [];
+   activities.forEach((el) => {
+      // All tasks, even incomplete ones
+      if (labels.findIndex((name) => name == el[0]) != -1) {
+         data[labels.findIndex((name) => name == el[0])].push([el[1], el[4]["start"]]);
+      } else {
+         labels.push(el[0]);
+         ranks.push(0);
+         data.push([[el[1], el[4]["start"]]]);
+      }
+   });
+   labels.forEach((label) => {
+      // Good stuff? That's to be seen
+      let mSSOD = Math.floor(milsSinceDay(new Date()) / 60000);
+      let timesValues = [];
+      for (let i = 0; i < 72; i++) {
+         timesValues.push(0);
+         data[labels.indexOf(label)].forEach((el) => {
+            let startDate = el[1];
+            let mSSODFT = Math.floor(milsSinceDay(new Date(el[1])) / 60000);
+            let subs = mSSOD - mSSODFT;
+            if (subs < 0) subs = 1440 + subs;
+            if (subs > 1440) subs = subs - 1440;
+            if ((subs <= (10 * i)) && (subs > (10 * (i - 1)))) timesValues[i]++;
+            
+            let firstNum = mSSOD - (i * 10);
+            if (firstNum < 0) firstNum = 1440 + firstNum;
+            let secondNum = firstNum + 10;
+
+            
+            
+
+            // console.log(firstNum, secondNum, mSSOD - ((i - 1) * 10));
+            console.log((((mSSOD + (i * 10)) > mSSODFT) && ((mSSOD + ((i - 1) * 10)) <= mSSODFT)) || ((firstNum > mSSODFT) && (secondNum <= mSSODFT)) ? true : "bad");
+         });
+      }
+      console.log(label, timesValues)
+      
+      // Decide rank
+      let timeWeight = 0;
+      for (let i = timesValues.length - 1; i >= 0; i--) {
+         // Changing this will change how important recent tasks are
+         timeWeight += .3;
+         timeWeight = Math.round(timeWeight * 100) / 100;
+         if (timesValues[i] != 0) ranks[labels.indexOf(label)] += timesValues[i] * timeWeight;
+      }
+      
+      // Get milliseconds since start of day
+      function milsSinceDay(date) {
+         return (date.getHours() * 60 * 60 * 1000) + (date.getMinutes() * 60 * 1000) + (date.getSeconds() * 1000) + date.getMilliseconds();
+      }
+   });
+   
+   // Merge rank and labels arrays
+   let labelRanks = [];
+   for (let i = 0; i < ranks.length; i++) labelRanks.push([labels[i], ranks[i]]);
+   
+   // Sort by rank
+   labelRanks.sort((a, b) => { return a[1] - b[1]; }).reverse();
+   
+   // Puts elements into suggestions box
+   labelRanks.forEach((el) => {
+      let block = document.createElement("DIV");
+      block.classList.add("suggestion-element")
+      block.innerHTML = `
+         <p>${el[0]}</p>
+         <span class='material-symbols-rounded'>replay</span>
+      `;
+      block.onclick = () => restartActivity(el[0]);
+      document.querySelector(".suggestions").append(block);
+   });
+}
+
+generateSuggestions();
+
 
 // ==========================================
 // Stats
@@ -382,7 +461,9 @@ let randomColor = "#" + Math.floor(Math.random() * 2 ** 24).toString(16).padStar
 
 function noSpaces(txt) {
    // Note that if any of these replacment words are used in the actual activity name, it might cause problems, like considering them the same
-   return encodeURI(txt.replace(/\s/g, "").replaceAll("!", "nonono").replaceAll("?", "nononono")).replaceAll("%", "WHYCSS");
+   // Suopport these !	#	$	&	'	(	)	*	+	,	/	:	;	=	?	@	[	]
+   // A valid name should start with an underscore (_), a hyphen (-) or a letter (a-z) which is followed by any numbers, hyphens, underscores, letters. A name should be at least two characters long. Cannot start with a digit, two hyphens or a hyphen followed by a number.
+   return encodeURI(txt.replace(/\s/g, "").replaceAll("!", "nonono").replaceAll("?", "nononono")).replaceAll("%", "WHYCSS").replaceAll(":", "uunununu").replaceAll("(", "oeunen");
 }
 
 // ==========================================
@@ -390,16 +471,17 @@ function noSpaces(txt) {
 // ==========================================
 
 // Recommend commonly used tasks based on time and location
+// Filter through suggestions as you type
 // Group tasks by catogory (custom color, used for charts)
 // Add settings to export
 // Rename tasks
-// About page
-// Transfer to digit.js
+// Switch to digit.js
+// Days since activity should be calculated before adding to array item, by subtracting .01, multiplied by 1.1 for each consecutive week distant
+// Show graph for when tasks were done
 
 /*
 == Things that are broken ==
 // Multiple tabs mess with save
-// Deleting a task will murder the program
 // I suppose the hacky way I remove spaces is a problem
 
 == Settings ==
@@ -409,9 +491,9 @@ function noSpaces(txt) {
 
 == Visual ==
 // Only show most recent in completed tasks
-// Custom popups/alerts (bottom popups like Thoughts (bottom right, ect) and top like iPadOS (same size for large and small screens))
 // Task color is black on first added tasks
 // Dark theme
+// Sequoia theme
 
 == Automate activites ==
 Automated activites will have a set schedule time, which can be repeated, when it will alert you, and you can choose to start/delay/ignore the activity (call reminders?)

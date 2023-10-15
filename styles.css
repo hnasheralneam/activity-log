@@ -190,6 +190,29 @@ hr {
    color: #555;
 }
 
+/* Suggestions */
+.suggestion-element {
+   position: relative;
+   margin: .3em 0;
+   padding: .8em 1em;
+   background-color: #fafafa;
+   border-radius: .5em 1.6em 1.6em .5em;
+   box-shadow: 0 .1em .25em #ddd;
+   border-left: solid .4em #ccc;
+   transition: .2s;
+}
+
+.suggestion-element:hover {
+   border-color: #888;
+   padding-left: 1.3em;
+}
+
+.suggestion-element span {
+   position: absolute;
+   top: .5em;
+   right: .5em;
+}
+
 /* Layout */
 @media screen and (min-width: 900px) {
    body {
