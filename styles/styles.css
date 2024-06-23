@@ -45,10 +45,16 @@ body {
    padding: 0.6em;
    background-color: #fff;
    border-radius: var(--container-border-radius);
+   position: relative;
 }
 
 .page {
    display: none;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   padding: 1rem;
 }
 
 .page-active {
@@ -58,16 +64,17 @@ body {
 
 fieldset {
    margin: 0.5em .5em;
-   padding: 0.7em;
-   border-radius: 0.2em;
-   border: solid .15em #666;
+   padding: 1rem;
+   border-radius: var(--container-border-radius);
+   border: solid .2rem #222;
 }
 
 legend {
    background-color: #222;
    color: #fff;
-   padding: 3px 6px;
-   border-radius: 0.2em;
+   padding: .4rem .8rem;
+   margin: auto;
+   border-radius: var(--container-border-radius);
 }
 
 input {
@@ -119,14 +126,19 @@ button:disabled {
    padding: 0.4em 0.7em;
    margin: 0.2em 0;
    box-shadow: 0 0.1em 0.5em #ddd;
-   border-radius: 0.2em;
+   border-radius: var(--container-border-radius);
+}
+
+.activity-name {
+   font-weight: 700;
+   font-size: 110%;
 }
 
 .avgtimeblock {
    padding: 0.4em 0.7em;
    margin: 0.3em 0;
    border: solid 0.12em #eee;
-   border-radius: 0.2em;
+   border-radius: var(--container-border-radius);
 }
 
 .controls {
@@ -137,6 +149,10 @@ button:disabled {
    border-radius: 5em;
    margin: 0.3em;
    padding: 0 0.3em;
+}
+
+.controls * {
+   box-sizing: content-box;
 }
 
 .cancelActivity,
@@ -180,10 +196,10 @@ button:disabled {
    top: 0;
    right: 0;
    margin: 0.17em 0.2em;
-   padding: 0.3em 0.5em;
+   padding: 0.3em 0.7em;
    background-color: transparent;
    color: #222;
-   border-radius: 0.4em;
+   border-radius: var(--container-border-radius);
    font-family: sans-serif;
    font-weight: 600;
    border: solid 0.19em #222;

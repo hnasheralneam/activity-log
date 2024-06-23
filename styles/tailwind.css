@@ -558,6 +558,26 @@ video {
   visibility: collapse;
 }
 
+.absolute {
+  position: absolute;
+}
+
+.relative {
+  position: relative;
+}
+
+.left-0 {
+  left: 0px;
+}
+
+.top-0 {
+  top: 0px;
+}
+
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
@@ -576,6 +596,14 @@ video {
 
 .w-\[100\%\] {
   width: 100%;
+}
+
+.min-w-\[50vw\] {
+  min-width: 50vw;
+}
+
+.min-w-\[100vw\] {
+  min-width: 100vw;
 }
 
 .grid-cols-2 {
@@ -599,6 +627,11 @@ video {
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
+}
+
+.bg-red-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
 }
 
 .shadow-sm {

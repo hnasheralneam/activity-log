@@ -109,6 +109,7 @@ function createActivity(activityName, activity) {
    element.classList.add("activity");
    // Activity Name
    let elName = document.createElement("H4");
+   elName.classList.add("activity-name");
    elName.textContent = activityName;
    element.appendChild(elName);
    // Counter
