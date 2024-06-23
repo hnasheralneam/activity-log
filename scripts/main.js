@@ -253,7 +253,7 @@ function createActivity(activityName, activity) {
          elRestart.classList.add("continueActivity");
          elRestart.classList.add(`ar${activities.indexOf(activity)}`);
          elRestart.innerHTML =
-            "<span class='material-symbols-rounded'>replay</span>";
+            "<span class='material-symbols-rounded redo-activty-icon'>replay</span>";
          elRestart.onclick = () => restartActivity(activityName);
          controls.appendChild(elRestart);
 
@@ -346,7 +346,7 @@ function generateSuggestions() {
       block.classList.add("suggestion-element")
       block.innerHTML = `
          <p>${el[0]}</p>
-         <span class='material-symbols-rounded'>replay</span>
+         <span class='material-symbols-rounded redo-activty-icon'>replay</span>
       `;
       block.onclick = () => restartActivity(el[0]);
       document.querySelector(".suggestions").append(block);
@@ -465,36 +465,3 @@ function noSpaces(txt) {
    // A valid name should start with an underscore (_), a hyphen (-) or a letter (a-z) which is followed by any numbers, hyphens, underscores, letters. A name should be at least two characters long. Cannot start with a digit, two hyphens or a hyphen followed by a number.
    return encodeURI(txt.replace(/\s/g, "").replaceAll("!", "nonono").replaceAll("?", "nononono")).replaceAll("%", "WHYCSS").replaceAll(":", "uunununu").replaceAll("(", "oeunen");
 }
-
-// ==========================================
-// Ideas and Plans
-// ==========================================
-
-// Recommend commonly used tasks based on time and location
-// Filter through suggestions as you type
-// Group tasks by catogory (custom color, used for charts)
-// Add settings to export
-// Rename tasks
-// Switch to digit.js
-// Days since activity should be calculated before adding to array item, by subtracting .01, multiplied by 1.1 for each consecutive week distant
-// Show graph for when tasks were done
-
-/*
-== Things that are broken ==
-// Multiple tabs mess with save
-// I suppose the hacky way I remove spaces is a problem
-
-== Settings ==
-// Setting to continue tasks when tab is closed
-// Option that adding new tasks completes previous (for one-direction workflow)
-// Option for charts to show tasks in progress
-
-== Visual ==
-// Only show most recent in completed tasks
-// Task color is black on first added tasks
-// Dark theme
-// Sequoia theme
-
-== Automate activites ==
-Automated activites will have a set schedule time, which can be repeated, when it will alert you, and you can choose to start/delay/ignore the activity (call reminders?)
-*/
