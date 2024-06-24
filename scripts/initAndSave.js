@@ -17,14 +17,19 @@ let data = [];
 
 function reinit() {
    // Select the right radio button
-   if (settings.collapse) document.querySelector(`#${settings.collapse}`).checked = true;
+   // if (settings.collapse) document.querySelector(`#${settings.collapse}`).checked = true;
 }
+
 
 function clearSave() {
    if (confirm("Are you sure you want to delete your save?")) {
       activities = [];
-      localStorage.setItem("activityLogSave", JSON.stringify(activities));
-      localStorage.setItem("activityLogActiveSave", null);
+      activeTask = {};
+      isActiveTask = false;
+      settings = settingsInit;
+      saveActive();
+      saveActivites();
+      saveSettings();
       location.reload();
    }
 }
@@ -32,7 +37,15 @@ function clearSave() {
 // should export all of save, settings included!
 function exportSave() {
    let txt = document.querySelector(".exportdata");
-   txt.value = JSON.stringify(activities);
+
+   let saveData = {
+      settings: settings,
+      activities: activities,
+      activeTask: activeTask,
+      isActiveTask: isActiveTask
+   }
+
+   txt.value = JSON.stringify(saveData);
    txt.select();
    txt.setSelectionRange(0, 99999); // For mobile
    navigator.clipboard.writeText(txt.value);
@@ -41,8 +54,12 @@ function exportSave() {
 
 function importSave() {
    if (confirm("This will delete your current save. Are you sure?")) {
-      let inputTxt = prompt("Enter save...");
-      activities = JSON.parse(inputTxt);
+      let input = prompt("Enter save...");
+      let saveData = JSON.parse(input);
+      settings = saveData.settings;
+      activities = saveData.activities;
+      activeTask = saveData.activeTask;
+      isActiveTask = saveData.isActiveTask;
       location.reload();
    }
 }

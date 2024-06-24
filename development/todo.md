@@ -37,5 +37,4 @@ For activity log, which you will use today to log your activity, work on the web
 
 
 - create easy way to add time later (set start finish times, length)
-- make seperate array for completed elements to avoid reload checking
 - export settings with export, export completed with export

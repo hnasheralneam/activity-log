@@ -21,15 +21,15 @@
       </div>
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('history')">
          <span class="material-symbols-rounded">history</span>
-      </div>
+      </div> -->
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('settings')">
          <span class="material-symbols-rounded">settings</span>
-      </div> -->
+      </div>
    </div>
    <div class="content-parent">
       <div class="content shadow-sm">
          <div class="page main page-active">
-            <div class="grid grid-cols-2">
+            <div class="page-inner grid grid-cols-2">
                <fieldset>
                   <legend>Start a new activity</legend>
                   <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
@@ -97,7 +97,7 @@
                   <p>Imports a save. If you mess with the export, it's your fault if it breaks.</p>
                   <button onclick="importSave()">Import save</button>
                </div>
-               <hr class="settingsDivider">
+               <!-- <hr class="settingsDivider">
                <div class="settingsections">
                   <h2 class="settingHeaderTxt">Collapse Options</h2>
                   <p>Choose how to collapse your completed tasks:</p>
@@ -116,7 +116,7 @@
                         <label for="none">None</label>
                      </div>
                   </section>
-               </div>
+               </div> -->
             </fieldset>
          </div>
       </div>

@@ -277,10 +277,9 @@ hr {
 }
 
 /* Layout */
-@media screen and (min-width: 900px) {
-   .content {
-      display: grid;
-      grid-template-columns: 50% 50%;
+@media screen and (max-width: 900px) {
+   .page-inner {
+      grid-template-columns: 100%;
    }
 }
 

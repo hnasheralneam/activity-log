@@ -27,11 +27,6 @@ if (localStorage.getItem("activityLogSave")) {
    settings = settingsInit;
 }
 
-let save = setInterval(() => {
-   // should only set on value change, would save a lot of memory
-   localStorage.setItem( "activityLogSettingsSave", JSON.stringify(settings));
-}, 1500);
-
 function saveActive() {
    localStorage.setItem("activityLogActiveSave", JSON.stringify({
       isActiveTask: isActiveTask,
@@ -41,6 +36,10 @@ function saveActive() {
 
 function saveActivites() {
    localStorage.setItem("activityLogSave", JSON.stringify(activities));
+}
+
+function saveSettings() {
+   localStorage.setItem( "activityLogSettingsSave", JSON.stringify(settings));
 }
 
 // Collapse settings
@@ -242,21 +241,13 @@ function okayToOverrideTask() {
 }
 
 function getFormattedTime() {
-   var totalSeconds = activeTask.time / 1000;
-   var minutes = Math.floor(totalSeconds / 60);
-   var seconds = totalSeconds % 60;
-
+   let totalSeconds = activeTask.time / 1000;
+   let minutes = Math.floor(totalSeconds / 60);
+   let seconds = totalSeconds % 60;
    seconds = Math.round(seconds * 10) / 10;
 
-   var result = "";
-   if (minutes > 0) {
-      result += minutes + " minute" + (minutes !== 1 ? "s" : "") + " " + Math.round(seconds) + " seconds";
-   }
-   else {
-      result += seconds.toFixed(1) + " seconds";
-   }
-
-   return result;
+   if (minutes > 0) return minutes + " minute" + (minutes !== 1 ? "s" : "") + " " + Math.round(seconds) + " seconds";
+   return seconds.toFixed(1) + " seconds";
 }
 
 
