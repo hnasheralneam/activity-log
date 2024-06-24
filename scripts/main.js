@@ -1,26 +1,26 @@
 // Made by Hamza Nasher-Alneam
-// Last edited October 14 2023
+// Last edited Jun 23 2024
 // ==========================================
 // Init and save
 // ==========================================
 
-let activities = [];
+// Get elements for activity management
+let activeTaskElement = document.querySelector(".active-activity");
+let activityRunningElement = document.querySelector(".activityProgressing");
+let controlButtons = document.querySelector(".controls");
+let pauseButton = document.querySelector(".control-pause");
+let finishButton = document.querySelector(".control-finish");
+let cancelButton = document.querySelector(".control-cancel");
+let activityLoop;
 
-let settingsInit = {
-   runWhileClosed: false,
-   oneTaskWorkflow: false,
-   lastTick: Date.now(),
-   collapse: "short"
-};
-let settings = settingsInit;
+if (localStorage.getItem("activityLogSave")) {
+   activeSaveData = JSON.parse(localStorage.getItem("activityLogActiveSave"));
+   activeTask = activeSaveData.activeTask;
+   isActiveTask = activeSaveData.isActiveTask;
+   if (isActiveTask) setActivity(activeTask, true);
 
-// Stats vars
-let labels = [];
-let data = [];
-
-if (localStorage.getItem("activitytrackersave")) {
-   activities = JSON.parse(localStorage.getItem("activitytrackersave"));
-   settings = JSON.parse(localStorage.getItem("activitytrackersettingssave"));
+   activities = JSON.parse(localStorage.getItem("activityLogSave"));
+   settings = JSON.parse(localStorage.getItem("activityLogSettingsSave"));
    reinit();
 } else {
    activities = [];
@@ -28,39 +28,19 @@ if (localStorage.getItem("activitytrackersave")) {
 }
 
 let save = setInterval(() => {
-   localStorage.setItem("activitytrackersave", JSON.stringify(activities));
-   localStorage.setItem( "activitytrackersettingssave", JSON.stringify(settings));
-}, 500);
+   // should only set on value change, would save a lot of memory
+   localStorage.setItem( "activityLogSettingsSave", JSON.stringify(settings));
+}, 1500);
 
-function reinit() {
-   activities.forEach((el, i, arr) => { createActivity(el[0], i); });
-   // Select the right radio button
-   if (settings.collapse) document.querySelector(`#${settings.collapse}`).checked = true;
+function saveActive() {
+   localStorage.setItem("activityLogActiveSave", JSON.stringify({
+      isActiveTask: isActiveTask,
+      activeTask: activeTask
+   }));
 }
 
-function clearSave() {
-   if (confirm("Are you sure you want to delete your save?")) {
-      activities = [];
-      localStorage.setItem("activitytrackersave", JSON.stringify(activities));
-      location.reload();
-   }
-}
-
-function exportSave() {
-   let txt = document.querySelector(".exportdata");
-   txt.value = JSON.stringify(activities);
-   txt.select();
-   txt.setSelectionRange(0, 99999); // For mobile
-   navigator.clipboard.writeText(txt.value);
-   alert("Data saved to clipboard!");
-}
-
-function importSave() {
-   if (confirm("This will delete your current save. Are you sure?")) {
-      let inputTxt = prompt("Enter save...");
-      activities = JSON.parse(inputTxt);
-      location.reload();
-   }
+function saveActivites() {
+   localStorage.setItem("activityLogSave", JSON.stringify(activities));
 }
 
 // Collapse settings
@@ -70,10 +50,10 @@ function saveCollapseSettings() {
 }
 
 // ==========================================
-// Tasks
+// Creating activities
 // ==========================================
 
-// When entering tasks
+// When entering tasks, to prevent passing in empty string (could do in html)
 function textentered() {
    if (document.querySelector(".newActivity").value !== "")
       document.querySelector(".newActivityBtn").disabled = false;
@@ -89,112 +69,96 @@ document.querySelector(".newActivity").addEventListener("keyup", (event) => {
 // For from save
 function restartActivity(activity) {
    document.querySelector(".newActivity").value = activity;
-   newActivity();
+   setActivity();
 }
 
-// Only when making a new actity
 function newActivity() {
-   document.querySelector(".newActivityBtn").disabled = true;
+   // Get name
    let activityName = document.querySelector(".newActivity").value;
    document.querySelector(".newActivity").value = "";
-   let activity = activities.push([activityName, "time", "working", true, { start: new Date(), finish: undefined }]) - 1;
-   createActivity(activityName, activity);
+   document.querySelector(".newActivityBtn").disabled = true;
+
+   setActivity({
+      name: activityName,
+      time: 0,
+      paused: false,
+      start: new Date()
+   });
 }
 
-// Recreates or creates a task
-function createActivity(activityName, activity) {
-   document.querySelector(".activityProgressing").textContent = "";
-   // Activity parent
-   let element = document.createElement("DIV");
-   element.classList.add("activity");
-   // Activity Name
-   let elName = document.createElement("H4");
-   elName.classList.add("activity-name");
-   elName.textContent = activityName;
-   element.appendChild(elName);
-   // Counter
-   let elCount = document.createElement("SPAN");
-   element.appendChild(elCount);
-   // Controls
-   let controls = document.createElement("DIV");
-   controls.classList.add("controls");
-   element.appendChild(controls);
-   // Pause button
-   let elPause = document.createElement("SPAN");
-   elPause.classList.add("pauseActivity");
-   // Check if paused before styling
-   if (activities[activity][3]) elPause.innerHTML = "<span class='material-symbols-rounded'>pause</span>";
-   else elPause.innerHTML = "<span class='material-symbols-rounded'>play_arrow</span>";
-   elPause.onclick = () => {
-      if (activities[activity][3]) {
-         clearInterval(timerRun);
-         activities[activity][3] = false;
-         elPause.innerHTML = "<span class='material-symbols-rounded'>play_arrow</span>";
+// Create a new activity
+function setActivity(data, bypassOverrideCheck) {
+   if (isActiveTask && !bypassOverrideCheck) {
+      if (!okayToOverrideTask()) return;
+      finishActivity();
+   }
+
+   // Set activtiy data
+   isActiveTask = true;
+   activeTask = data;
+
+   activityRunningElement.classList.add("hidden");
+   activeTaskElement.classList.remove("hidden");
+
+   document.querySelector(".activity-name").textContent = activeTask.name;
+   let timeDisplay = document.querySelector(".activity-counter");
+
+
+   // Reset in case paused task is being reset
+   if (activeTask.paused) pauseButton.innerHTML = "<span class='material-symbols-rounded'>play_arrow</span>";
+   timeDisplay.textContent = getFormattedTime();
+
+   // Handle pause/unpause
+   pauseButton.onclick = () => {
+      if (activeTask.paused) {
+         activeTask.paused = false;
+         pauseButton.innerHTML = "<span class='material-symbols-rounded'>pause</span>";
       } else {
-         startInterval();
-         activities[activity][3] = true;
-         elPause.innerHTML = "<span class='material-symbols-rounded'>pause</span>";
+         activeTask.paused = true;
+         pauseButton.innerHTML = "<span class='material-symbols-rounded'>play_arrow</span>";
       }
+      saveActive();
    };
-   controls.appendChild(elPause);
-   // Finish button
-   let elFinish = document.createElement("SPAN");
-   elFinish.classList.add("finishActivity");
-   elFinish.innerHTML = "<span class='material-symbols-rounded'>done</span>";
-   elFinish.onclick = finishActivity;
-   controls.appendChild(elFinish);
-   // Remove button
-   let elRemove = document.createElement("SPAN");
-   elRemove.classList.add("cancelActivity");
-   elRemove.innerHTML = "<span class='material-symbols-rounded'>close</span>";
-   elRemove.onclick = () => {
-      clearInterval(timerRun);
-      element.remove();
-      let spliced = activities.splice(activity, 1);
-      if (!document.querySelector(".activitiesProgressing").firstChild) document.querySelector(".activityProgressing").textContent = "No tasks in progress";
-   };
-   controls.appendChild(elRemove);
 
-   // Add activity to page
-   document.querySelector(".activitiesProgressing").appendChild(element);
+   finishButton.onclick = finishActivity;
+   cancelButton.onclick = cancelActivity;
 
-   // Timer
-   let timer;
-   if (activities[activity][1] == "time") timer = 0;
-   else timer = activities[activity][1];
-   let timerRun;
-   let intervalRunning = activities[activity][3];
-   // Before starting timer, check if activity is finished
-   if (activities[activity][2] == "complete") finishActivity();
-   else if (activities[activity][3] == false) {
-      // Display time, but do not continue interval
-      activities[activity][1] = timer;
-      elCount.textContent = formatTime(timer);
-   } else {
-      startInterval();
-      activities[activity][3] = true;
+   let lastTime = new Date();
+   activityLoop = setInterval(() => {
+      let now = new Date();
+      if (!activeTask.paused) {
+         activeTask.time += now - lastTime;
+         timeDisplay.textContent = getFormattedTime();
+         saveActive();
+      }
+      lastTime = now;
+   }, 100);
+
+
+   function cancelActivity() {
+      isActiveTask = false;
+      activeTask = {};
+      clearInterval(activityLoop);
+      activityRunningElement.classList.remove("hidden");
+      activeTaskElement.classList.add("hidden");
+      saveActive();
    }
-   function startInterval() {
-      timerRun = setInterval(() => {
-         if (activities[activity]) {
-            activities[activity][1] = Math.round(10 * timer) / 10;
-            let seconds = Math.round(10 * (timer += 0.1)) / 10;
-            let minutes = Math.floor(seconds / 60);
-            seconds = Math.round(10 * (seconds -= minutes * 60)) / 10;
-            if (minutes > 0) elCount.textContent = minutes + " minute(s) and " + seconds + " seconds";
-            else elCount.textContent = seconds + " second(s)";
-         }
-         // If it dosen't exist, that means somthing before it has been deleted, which means the index has moved down one
-         else activity--;
-      }, 100);
-   }
+
    function finishActivity() {
-      // Finish time if not from save 
-      if (activities[activity][4]["finish"] == undefined) activities[activity][4]["finish"] = new Date();
+      delete activeTask.pause;
+      activities.push(activeTask)
+      cancelActivity();
+      saveActive();
+      saveActivites();
+   }
+
+
+   // be careful with this, because it is used to move items to stats and history
+   function oldfinishActivity() {
       // Pause timer
       clearInterval(timerRun);
-      activities[activity][3] = false;
-      // Move element
+
+      // copy element
       let newActivity = element;
       element.remove();
       document.querySelector(".activitiesCompleted").textContent = "";
@@ -245,9 +209,6 @@ function createActivity(activityName, activity) {
          newActivity.classList.add(`_${noSpaces(activityName)}`);
 
          // Remove old controls
-         elPause.remove();
-         elFinish.remove();
-         elRemove.remove();
          // Add new controls
          // Start again button
          let elRestart = document.createElement("SPAN");
@@ -259,10 +220,10 @@ function createActivity(activityName, activity) {
          controls.appendChild(elRestart);
 
          // Set time if from save
-         elCount.textContent = formatTime(timer);
+         timeDisplay.textContent = formatTime(timer);
          
          // Display start and end times
-         elCount.innerHTML = `${elCount.textContent} <br> 
+         timeDisplay.innerHTML = `${timeDisplay.textContent} <br> 
          Started ${new Date(activities[activity][4]["start"]).toLocaleString()} <br> 
          Finished ${new Date(activities[activity][4]["finish"]).toLocaleString()} <br><br>`;
       }
@@ -274,85 +235,35 @@ function createActivity(activityName, activity) {
    }
 }
 
+function okayToOverrideTask() {
+   let isSure = confirm("You already have an activity running. Do you want to finish it and start a new one instead?");
+   if (isSure) return true;
+   return false;
+}
+
+function getFormattedTime() {
+   var totalSeconds = activeTask.time / 1000;
+   var minutes = Math.floor(totalSeconds / 60);
+   var seconds = totalSeconds % 60;
+
+   seconds = Math.round(seconds * 10) / 10;
+
+   var result = "";
+   if (minutes > 0) {
+      result += minutes + " minute" + (minutes !== 1 ? "s" : "") + " " + Math.round(seconds) + " seconds";
+   }
+   else {
+      result += seconds.toFixed(1) + " seconds";
+   }
+
+   return result;
+}
+
+
+
 // ==========================================
 // Suggestions
 // ==========================================
-
-function generateSuggestions() {
-   let ranks = [];
-   let labels = [];
-   let data = [];
-   activities.forEach((el) => {
-      // All tasks, even incomplete ones
-      if (labels.findIndex((name) => name == el[0]) != -1) {
-         data[labels.findIndex((name) => name == el[0])].push([el[1], el[4]["start"]]);
-      } else {
-         labels.push(el[0]);
-         ranks.push(0);
-         data.push([[el[1], el[4]["start"]]]);
-      }
-   });
-   labels.forEach((label) => {
-      // Good stuff? That's to be seen
-      let mSSOD = Math.floor(milsSinceDay(new Date()) / 60000);
-      let timesValues = [];
-      for (let i = 0; i < 72; i++) {
-         timesValues.push(0);
-         data[labels.indexOf(label)].forEach((el) => {
-            let startDate = el[1];
-            let mSSODFT = Math.floor(milsSinceDay(new Date(el[1])) / 60000);
-            let subs = mSSOD - mSSODFT;
-            if (subs < 0) subs = 1440 + subs;
-            if (subs > 1440) subs = subs - 1440;
-            if ((subs <= (10 * i)) && (subs > (10 * (i - 1)))) timesValues[i]++;
-            
-            let firstNum = mSSOD - (i * 10);
-            if (firstNum < 0) firstNum = 1440 + firstNum;
-            let secondNum = firstNum + 10;
-
-            
-            
-
-            // console.log(firstNum, secondNum, mSSOD - ((i - 1) * 10));
-            console.log((((mSSOD + (i * 10)) > mSSODFT) && ((mSSOD + ((i - 1) * 10)) <= mSSODFT)) || ((firstNum > mSSODFT) && (secondNum <= mSSODFT)) ? true : "bad");
-         });
-      }
-      console.log(label, timesValues)
-      
-      // Decide rank
-      let timeWeight = 0;
-      for (let i = timesValues.length - 1; i >= 0; i--) {
-         // Changing this will change how important recent tasks are
-         timeWeight += .3;
-         timeWeight = Math.round(timeWeight * 100) / 100;
-         if (timesValues[i] != 0) ranks[labels.indexOf(label)] += timesValues[i] * timeWeight;
-      }
-      
-      // Get milliseconds since start of day
-      function milsSinceDay(date) {
-         return (date.getHours() * 60 * 60 * 1000) + (date.getMinutes() * 60 * 1000) + (date.getSeconds() * 1000) + date.getMilliseconds();
-      }
-   });
-   
-   // Merge rank and labels arrays
-   let labelRanks = [];
-   for (let i = 0; i < ranks.length; i++) labelRanks.push([labels[i], ranks[i]]);
-   
-   // Sort by rank
-   labelRanks.sort((a, b) => { return a[1] - b[1]; }).reverse();
-   
-   // Puts elements into suggestions box
-   labelRanks.forEach((el) => {
-      let block = document.createElement("DIV");
-      block.classList.add("suggestion-element")
-      block.innerHTML = `
-         <p>${el[0]}</p>
-         <span class='material-symbols-rounded redo-activty-icon'>replay</span>
-      `;
-      block.onclick = () => restartActivity(el[0]);
-      document.querySelector(".suggestions").append(block);
-   });
-}
 
 generateSuggestions();
 
@@ -361,21 +272,7 @@ generateSuggestions();
 // Stats
 // ==========================================
 
-const ctx = document.getElementById("myChart");
-let colors = [];
-
 updateChartValues();
-
-let chart = new Chart(ctx, {
-   type: "doughnut",
-   data: {
-      labels: labels,
-      datasets: [{
-         label: "seconds",
-         data: data
-      }]
-   }
-});
 
 setInterval(() => {
    updateChartValues();
@@ -384,60 +281,13 @@ setInterval(() => {
    chart.update();
 }, 2000);
 
-function updateChartValues() {
-   labels = [];
-   data = [];
-   activities.forEach((el, i) => {
-      if (el[2] == "complete") {
-         if (labels.findIndex((name) => name == el[0]) != -1) {
-            data[labels.findIndex((name) => name == el[0])] += el[1];
-         } else {
-            labels.push(el[0]);
-            data.push(el[1]);
-         }
-      }
-   });
-}
-
 // Avg activity time
 avgActivityTime();
 setInterval(avgActivityTime, 2000);
 
-function avgActivityTime() {
-   document.querySelector(".avgtime").innerHTML = "";
-   labels = [];
-   data = [];
-   activities.forEach((el, i) => {
-      if (el[2] == "complete") {
-         if (labels.findIndex((name) => name == el[0]) != -1) {
-            data[labels.findIndex((name) => name == el[0])].push(el[1]);
-         } else {
-            labels.push(el[0]);
-            data.push([el[1]]);
-         }
-      }
-   });
-   for (i in labels) {
-      let element = document.createElement("DIV");
-      element.classList.add("avgtimeblock");
-      let taskName = document.createElement("P");
-      taskName.textContent = labels[i];
-      let taskAvg = document.createElement("P");
-      const average = (array) => array.reduce((a, b) => a + b) / array.length;
-      taskAvg.textContent =
-         "Average time: " + formatTime(Math.round(10 * average(data[i])) / 10);
-      let taskTotal = document.createElement("P");
-      const totalTime = (array) => array.reduce((part, a) => part + a, 0);
-      taskTotal.textContent = "Total time: " + formatTime(totalTime(data[i]));
-      element.append(taskName);
-      element.append(taskAvg);
-      element.append(taskTotal);
-      document.querySelector(".avgtime").append(element);
-   }
-}
 
 // ==========================================
-// Superfluous Functions
+// Other Functions
 // ==========================================
 
 function formatTime(timeInSeconds) {

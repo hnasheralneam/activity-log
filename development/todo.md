@@ -14,7 +14,7 @@
 /*
 == Things that are broken ==
 // Multiple tabs mess with save
-// I suppose the hacky way I remove spaces is a problem
+// I suppose the hacky way I remove spaces is a problem (gen uuid instead?)
 
 == Settings ==
 // Setting to continue tasks when tab is closed
@@ -38,3 +38,4 @@ For activity log, which you will use today to log your activity, work on the web
 
 - create easy way to add time later (set start finish times, length)
 - make seperate array for completed elements to avoid reload checking
+- export settings with export, export completed with export

@@ -16,7 +16,7 @@
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('main')">
          <span class="material-symbols-rounded">home</span>
       </div>
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')">
+      <!-- <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')">
          <span class="material-symbols-rounded">bar_chart</span>
       </div>
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('history')">
@@ -24,7 +24,7 @@
       </div>
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('settings')">
          <span class="material-symbols-rounded">settings</span>
-      </div>
+      </div> -->
    </div>
    <div class="content-parent">
       <div class="content shadow-sm">
@@ -35,13 +35,27 @@
                   <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
                   <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>
                   <br>
-                  <h2>Suggestions</h2>
+                  <!-- <h2>Suggestions</h2> -->
                   <div class="suggestions"></div>
                </fieldset>
-               <fieldset>
-                  <legend>Tasks in progress</legend>
-                  <p class=activityProgressing>No tasks in progress</p>
-                  <div class="activitiesProgressing"></div>
+               <fieldset class="text-center">
+                  <legend>Current Activty</legend>
+                  <div class="active-activity relative hidden">
+                     <h4 class="activity-name"></h4>
+                     <span class="activity-counter"></span>
+                     <div class="controls">
+                        <span class="control-button control-cancel">
+                           <span class='material-symbols-rounded'>close</span>
+                        </span>
+                        <span class="control-button control-pause">
+                           <span class='material-symbols-rounded'>pause</span>
+                        </span>
+                        <span class="control-button control-finish">
+                           <span class='material-symbols-rounded'>done</span>
+                        </span>
+                     </div>
+                  </div>
+                  <p class=activityProgressing>No activity running</p>
                </fieldset>
             </div>
          </div>
@@ -108,6 +122,11 @@
       </div>
    </div>
 </body>
-<script src="scripts/main.js"></script>
+<!-- these scripts should only have vars and functions -->
+<script src="scripts/initAndSave.js"></script>
 <script src="scripts/changePage.js"></script>
+<script src="scripts/stats.js"></script>
+<script src="scripts/suggestions.js"></script>
+<!-- code should only be run from here -->
+<script src="scripts/main.js"></script>
 </html>
