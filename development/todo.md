@@ -27,8 +27,4 @@ Automated activites will have a set schedule time, which can be repeated, when i
 
 
 - create easy way to add time later (set start finish times, length)
-- save open page
 - missing replay button with short collapse, this is because it apparently runs the short collapse twice? will need to fix soon
-
-
-- chart needs colors
