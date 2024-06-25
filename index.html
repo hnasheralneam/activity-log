@@ -17,9 +17,9 @@
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('main')" title="home">
          <span class="material-symbols-rounded">home</span>
       </div>
-      <!-- <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
+      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
          <span class="material-symbols-rounded">bar_chart</span>
-      </div> -->
+      </div>
       <div class="nav-icon hover:shadow-md flex" onclick="displayPage('history')" title="history">
          <span class="material-symbols-rounded">history</span>
       </div>
@@ -63,13 +63,17 @@
             </div>
          </div>
          <div class="page stats">
-            <fieldset>
-               <legend>Stats</legend>
-               <canvas id="myChart"></canvas>
-               <hr>
-               <p class="avgtimetxt">Average & total time for each activity</p>
-               <div class="avgtime"></div>
-            </fieldset>
+            <div class="page-inner grid grid-cols-2">
+               <fieldset>
+                  <legend>Charts</legend>
+                  <canvas id="myChart"></canvas>
+               </fieldset>
+               <fieldset>
+                  <legend>Stats</legend>
+                  <p class="avgtimetxt">Average & total time for each activity</p>
+                  <div class="avgtime"></div>
+               </fieldset>
+            </div>
          </div>
          <div class="page history">
             <fieldset>

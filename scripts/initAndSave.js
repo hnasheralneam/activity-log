@@ -16,11 +16,10 @@ let labels = [];
 let data = [];
 
 function reinit() {
+   updateStats();
    for (let i = 0; i < activities.length; i++) {
       addCompletedActivity(activities[i]);
    }
-   // Select the right radio button
-   // if (settings.collapse) document.querySelector(`#${settings.collapse}`).checked = true;
 }
 
 

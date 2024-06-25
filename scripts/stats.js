@@ -3,7 +3,6 @@
 // ==========================================
 
 const ctx = document.getElementById("myChart");
-let colors = [];
 
 let chart = new Chart(ctx, {
    type: "doughnut",

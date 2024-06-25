@@ -114,6 +114,7 @@ function finishActivity() {
    cancelActivity();
    saveActive();
    saveActivites();
+   updateStats();
    addCompletedActivity(activities[activities.length - 1]);
 }
 
@@ -166,7 +167,6 @@ function addCompletedActivity(activity) {
          element.classList.add(`._short_${activityClassName}`);
 
          // Average time
-         avgActivityTime();
          let index = labels.indexOf(activity.name);
          averageTimeElement.innerHTML = `<div class="complete-summary">
                                             <span class="material-symbols-rounded completed-activity-summary-icon">avg_time</span>
@@ -230,79 +230,6 @@ function addCompletedActivity(activity) {
    function at(time) {
       return formatTime(new Date(time), "12") + " on " + formatDate(new Date(time), "quick");
    }
-
-   // code above is basically everthing from the else statement below
-
-   
-   // // Checks if multiple elements of same task, then collapses
-
-   // if (document.querySelector(`._${noSpaces(activityName)}`) && settings.collapse !== "none") {
-   //    if (settings.collapse == "long") {
-   //       let newww = document.createElement("DIV");
-   //       newww.innerHTML = `${formatTime(timer)} <br> 
-   //       Started ${new Date(activities[activity][4]["start"]).toLocaleString()} <br> 
-   //       Finished ${new Date(activities[activity][4]["finish"]).toLocaleString()} <br><br>`;
-   //       document.querySelector(`._${noSpaces(activityName)}`).append(newww);
-   //    } else if (settings.collapse == "short") {
-   //       // If there isn't another summary
-   //       if (document.querySelector(`._short_${noSpaces(activityName)}`) == null) {
-   //          // Remove time for first activity
-   //          document.querySelector(`._${noSpaces(activityName)}`).firstChild.nextSibling.remove();
-   //          // Parent container
-   //          let element = document.createElement("DIV");
-   //          element.classList.add(`_short_${noSpaces(activityName)}`);
-   //          // To get the labels and data
-   //          avgActivityTime();
-   //          // Average time
-   //          let taskAvg = document.createElement("P");
-   //          const average = (array) => array.reduce((a, b) => a + b) / array.length;
-   //          // Find index of label, then find corresponding in data
-   //          let thisIndex = labels.indexOf(activityName);
-   //          taskAvg.innerHTML = `<div class="complete-summary"><span class="material-symbols-rounded completed-activity-summary-icon">avg_time</span><p>Average time: ${formatTime(
-   //             Math.round(10 * average(data[thisIndex])) / 10
-   //          )}</p></div>`;
-   //          // Total time
-   //          let taskTotal = document.createElement("P");
-   //          const totalTime = (array) => array.reduce((part, a) => part + a, 0);
-   //          taskTotal.innerHTML = `<div class="complete-summary"><span class="material-symbols-rounded completed-activity-summary-icon">timer</span><p>Total time: ${formatTime(
-   //             totalTime(data[thisIndex])
-   //          )}</p></div>`;
-   //          // Amount of activites
-   //          let activityAmounts = document.createElement("P");
-   //          activityAmounts.innerHTML = `<div class="complete-summary"><span class="material-symbols-rounded completed-activity-summary-icon">numbers</span><p>Activites: ${data[thisIndex].length}</p></div>`;
-   //          // Append items to block
-   //          element.append(taskAvg);
-   //          element.append(taskTotal);
-   //          element.append(activityAmounts);
-   //          document.querySelector(`._${noSpaces(activityName)}`).append(element);
-   //       }
-   //    }
-   // }
-
-
-   // else {
-   //    document.querySelector(".history").append(element);
-   //    element.classList.add(`_${noSpaces(activityName)}`);
-
-   //    // Remove old controls
-   //    // Add new controls
-   //    // Start again button
-   //    let elRestart = document.createElement("SPAN");
-   //    elRestart.classList.add("continueActivity");
-   //    elRestart.classList.add(`ar${activities.indexOf(activity)}`);
-   //    elRestart.innerHTML =
-   //       "<span class='material-symbols-rounded redo-activty-icon'>replay</span>";
-   //    elRestart.onclick = () => restartActivity(activityName);
-   //    controls.appendChild(elRestart);
-
-   //    // Set time if from save
-   //    timeDisplay.textContent = formatTime(timer);
-      
-   //    // Display start and end times
-   //    timeDisplay.innerHTML = `${timeDisplay.textContent} <br> 
-   //    Started ${new Date(activities[activity][4]["start"]).toLocaleString()} <br> 
-   //    Finished ${new Date(activities[activity][4]["finish"]).toLocaleString()} <br><br>`;
-   // }
 }
 
 function hash(string) {
