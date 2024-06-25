@@ -40,7 +40,6 @@ function saveCollapseSettings() {
 
 function refreshChart() {
    updateChartValues();
-   console.log(labels, data)
    chart.data.labels = labels;
    chart.data.datasets[0].data = sumNestedArrays(data);
    chart.data.datasets[0].backgroundColor = generateColorArray(labels.length);

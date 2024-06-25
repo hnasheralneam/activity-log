@@ -16,6 +16,11 @@ let labels = [];
 let data = [];
 
 function reinit() {
+   // Reopen previous page
+   if (pageSave) {
+      displayPage(JSON.parse(pageSave).page);
+   }
+
    updateStats();
    for (let i = 0; i < activities.length; i++) {
       addCompletedActivity(activities[i]);
