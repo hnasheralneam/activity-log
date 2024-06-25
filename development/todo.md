@@ -38,3 +38,7 @@ For activity log, which you will use today to log your activity, work on the web
 
 - create easy way to add time later (set start finish times, length)
 - export settings with export, export completed with export
+- add a uuid for each activity (same name different sessions)?
+- save open page
+- creating new task should take to main page
+- add back finished to activities

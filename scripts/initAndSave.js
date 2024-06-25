@@ -16,11 +16,44 @@ let labels = [];
 let data = [];
 
 function reinit() {
+   for (let i = 0; i < activities.length; i++) {
+      addCompletedActivity(activities[i]);
+   }
    // Select the right radio button
    // if (settings.collapse) document.querySelector(`#${settings.collapse}`).checked = true;
 }
 
 
+// Get elements for activity management
+let activeTaskElement = document.querySelector(".active-activity");
+let activityRunningElement = document.querySelector(".activityProgressing");
+let controlButtons = document.querySelector(".controls");
+let pauseButton = document.querySelector(".control-pause");
+let finishButton = document.querySelector(".control-finish");
+let cancelButton = document.querySelector(".control-cancel");
+
+
+
+
+// Save
+function saveActive() {
+   localStorage.setItem("activityLogActiveSave", JSON.stringify({
+      isActiveTask: isActiveTask,
+      activeTask: activeTask
+   }));
+}
+
+function saveActivites() {
+   localStorage.setItem("activityLogSave", JSON.stringify(activities));
+}
+
+function saveSettings() {
+   localStorage.setItem( "activityLogSettingsSave", JSON.stringify(settings));
+}
+
+
+
+// Settings
 function clearSave() {
    if (confirm("Are you sure you want to delete your save?")) {
       activities = [];

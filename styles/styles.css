@@ -78,9 +78,9 @@ legend {
 }
 
 input {
-   padding: 0.3em 0.6em;
+   padding: 0.5rem 0.6em;
    border: solid 0.1em #666;
-   border-radius: 0.2em;
+   border-radius: var(--container-border-radius);
    transition: 0.15s;
 }
 
@@ -90,24 +90,27 @@ input:focus {
    box-shadow: 0 0 0 0.2em #ddd;
 }
 
+
 button {
-   padding: 0.3em 0.6em;
-   margin: 0.2em 0.3em;
-   font-size: 95%;
-   background-color: #eee;
-   border: none;
-   border-radius: 0.2em;
-   box-shadow: 0 0.08em 0.2em #ccc;
-   transition: 0.15s;
+   margin: 0.17em 0.2em;
+   padding: 0.3em 0.7em;
+   background-color: transparent;
+   color: #222;
+   border-radius: var(--container-border-radius);
+   font-family: sans-serif;
+   font-weight: 600;
+   border: solid 0.2rem #222;
+   transition: 0.2s;
 }
 
 button:hover {
-   box-shadow: 0 0.1em 0.3em #bbb;
+   color: #fff;
+   border: solid 0.2em transparent;
+   background-color: #222;
 }
 
 button:active {
-   background-color: #f5f5f5;
-   box-shadow: 0 0.08em 0.3em #ddd;
+   transform: scale(1.05);
 }
 
 button:focus {
@@ -116,16 +119,18 @@ button:focus {
 }
 
 button:disabled {
-   background-color: #ddd;
-   box-shadow: 0 0.08em 0.2em #aaa;
+   background-color: #ccc;
+   border-color: #ccc;
+   color: #444;
+   box-shadow: none;
 }
 
 /* Specific Styles */
 .activity {
    position: relative;
-   padding: 0.4em 0.7em;
-   margin: 0.2em 0;
-   box-shadow: 0 0.1em 0.5em #ddd;
+   margin: .4rem .6rem;
+   padding: 1rem 1.6rem;
+   box-shadow: 0 0.1em 0.3em #ddd;
    border-radius: var(--container-border-radius);
 }
 
@@ -194,22 +199,8 @@ button:disabled {
    position: absolute;
    top: 0;
    right: 0;
-   margin: 0.17em 0.2em;
-   padding: 0.3em 0.7em;
-   background-color: transparent;
-   color: #222;
-   border-radius: var(--container-border-radius);
-   font-family: sans-serif;
-   font-weight: 600;
-   border: solid 0.19em #222;
-   transition: 0.2s;
 }
 
-.settingsblock button:hover {
-   color: #fff;
-   border: solid 0.19em transparent;
-   background-color: #222;
-}
 
 .settingHeaderTxt {
    font-size: 1.25em;
@@ -281,6 +272,9 @@ hr {
    .page-inner {
       grid-template-columns: 100%;
    }
+   .history-items {
+      grid-template-columns: 100%;
+   }
 }
 
 /* So it won't hurt your eyes ;) */
@@ -297,4 +291,29 @@ hr {
 
 .redo-activty-icon:hover {
    transform: scale(1.2);
+}
+
+.history .controls {
+   position: absolute;
+   top: 0;
+   right: 0;
+   background-color: none;
+   padding: 0;
+   margin: .6rem .4rem;
+}
+
+.history .control-button {
+   height: 1rem;
+   width: 1rem;
+   padding: 0.6rem;
+   font-size: 0.6rem;
+}
+
+.history h4 {
+   font-weight: 600;
+   font-size: 1.2em;
+}
+
+.history .time {
+   color: #444;
 }

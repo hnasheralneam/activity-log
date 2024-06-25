@@ -9,20 +9,21 @@
    <link rel="stylesheet" href="styles/tailwind.css">
    <link rel="stylesheet" href="styles/styles.css">
    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+   <script src="https://hnasheralneam.github.io/digit/v0.3.0.js"></script>
    <title>Activity Log</title>
 </head>
 <body class="bg-gray-200">
    <div class="nav bg-gray-100">
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('main')">
+      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('main')" title="home">
          <span class="material-symbols-rounded">home</span>
       </div>
-      <!-- <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')">
+      <!-- <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
          <span class="material-symbols-rounded">bar_chart</span>
-      </div>
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('history')">
-         <span class="material-symbols-rounded">history</span>
       </div> -->
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('settings')">
+      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('history')" title="history">
+         <span class="material-symbols-rounded">history</span>
+      </div>
+      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('settings')" title="settings">
          <span class="material-symbols-rounded">settings</span>
       </div>
    </div>
@@ -32,8 +33,10 @@
             <div class="page-inner grid grid-cols-2">
                <fieldset>
                   <legend>Start a new activity</legend>
-                  <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
-                  <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>
+                  <div class="w-full grid" style="grid-template-columns: 70% 30%">
+                     <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
+                     <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>   
+                  </div>
                   <br>
                   <!-- <h2>Suggestions</h2> -->
                   <div class="suggestions"></div>
@@ -71,8 +74,8 @@
          <div class="page history">
             <fieldset>
                <legend>Completed Tasks</legend>
-               <p class="activitiesCompleted">No activities are finished</p>
-               <div class="completedActivities"></div>
+               <div class="history-items grid grid-cols-2" style="align-items: start"></div>
+               <p class="are-activities-completed">No activities are finished</p>
             </fieldset>
          </div>
          <div class="page settings">
@@ -97,7 +100,7 @@
                   <p>Imports a save. If you mess with the export, it's your fault if it breaks.</p>
                   <button onclick="importSave()">Import save</button>
                </div>
-               <!-- <hr class="settingsDivider">
+               <hr class="settingsDivider">
                <div class="settingsections">
                   <h2 class="settingHeaderTxt">Collapse Options</h2>
                   <p>Choose how to collapse your completed tasks:</p>
@@ -116,7 +119,7 @@
                         <label for="none">None</label>
                      </div>
                   </section>
-               </div> -->
+               </div>
             </fieldset>
          </div>
       </div>
@@ -127,6 +130,7 @@
 <script src="scripts/changePage.js"></script>
 <script src="scripts/stats.js"></script>
 <script src="scripts/suggestions.js"></script>
-<!-- code should only be run from here -->
+<!-- code should only be run from these scripts -->
+<script src="scripts/activities.js"></script>
 <script src="scripts/main.js"></script>
 </html>
