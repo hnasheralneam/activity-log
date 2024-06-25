@@ -134,7 +134,8 @@ function okayToOverrideTask() {
 // activity is the full item
 function addCompletedActivity(activity) {
    let activityClassName = hash(activity.name);
-   
+   console.log(activity.name)
+
    // If there is another element and collapsing is on
    if (document.querySelector(`._${activityClassName}`) && settings.collapse !== "none") {
       let existingElement = document.querySelector(`._${activityClassName}`);
@@ -164,7 +165,7 @@ function addCompletedActivity(activity) {
          let totalTimeElement = document.createElement("p");
          let activityCountElement = document.createElement("p");
 
-         element.classList.add(`._short_${activityClassName}`);
+         element.classList.add(`_short_${activityClassName}`);
 
          // Average time
          let index = labels.indexOf(activity.name);
