@@ -31,7 +31,7 @@ function saveCollapseSettings() {
 // Suggestions
 // ==========================================
 
-// generateSuggestions();
+generateSuggestions();
 
 
 // ==========================================

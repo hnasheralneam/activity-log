@@ -116,6 +116,7 @@ function finishActivity() {
    saveActivites();
    updateStats();
    addCompletedActivity(activities[activities.length - 1]);
+   generateSuggestions();
 }
 
 function okayToOverrideTask() {
@@ -134,7 +135,6 @@ function okayToOverrideTask() {
 // activity is the full item
 function addCompletedActivity(activity) {
    let activityClassName = hash(activity.name);
-   console.log(activity.name)
 
    // If there is another element and collapsing is on
    if (document.querySelector(`._${activityClassName}`) && settings.collapse !== "none") {
