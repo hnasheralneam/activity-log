@@ -247,24 +247,30 @@ hr {
 /* Suggestions */
 .suggestion-element {
    position: relative;
-   margin: .3em 0;
-   padding: .8em 1em;
-   background-color: #fafafa;
-   border-radius: .5em 1.6em 1.6em .5em;
-   box-shadow: 0 .1em .25em #ddd;
+   margin: .8rem 2rem;
+   padding: 1rem .8rem;
+   border-radius: var(--container-border-radius);
+   border: solid 0.12em #eee;
    border-left: solid .4em #ccc;
+   text-align: center;
+   background-color: #fff;
    transition: .2s;
 }
 
 .suggestion-element:hover {
-   border-color: #888;
+   border-color: #aaa;
    padding-left: 1.3em;
+   transform: scale(1.1);
 }
 
 .suggestion-element span {
    position: absolute;
-   top: .5em;
-   right: .5em;
+   top: .7em;
+   right: .7em;
+}
+
+#myChart {
+   max-width: 45vw;
 }
 
 /* Layout */
@@ -274,6 +280,9 @@ hr {
    }
    .history-items {
       grid-template-columns: 100%;
+   }
+   #myChart {
+      max-width: 90vw;
    }
 }
 
