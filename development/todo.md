@@ -8,7 +8,6 @@
 - Setting to continue tasks when tab is closed
 - Filter through suggestions as you type
 - more graphs
-- move navigation to top at small screen sizes
 
 
 -----major features-----
