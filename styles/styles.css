@@ -26,7 +26,6 @@ body {
 .nav-icon {
    width: 50px;
    height: 50px;
-   background-color: #fff;
    transition: .2s;
    border-radius: var(--container-border-radius);
    margin: 10px auto;
@@ -43,7 +42,6 @@ body {
    height: 100%;
    overflow: scroll;
    padding: 0.6em;
-   background-color: #fff;
    border-radius: var(--container-border-radius);
    position: relative;
 }
@@ -90,7 +88,6 @@ input:focus {
    box-shadow: 0 0 0 0.2em #ddd;
 }
 
-
 button {
    margin: 0.17em 0.2em;
    padding: 0.3em 0.7em;
@@ -124,6 +121,7 @@ button:disabled {
    color: #444;
    box-shadow: none;
 }
+
 
 /* Specific Styles */
 .activity {
@@ -286,14 +284,6 @@ hr {
    }
 }
 
-/* So it won't hurt your eyes ;) */
-@media (prefers-color-scheme: dark) {
-   body {
-      background-color: #eee;
-   }
-}
-
-
 .redo-activty-icon {
    transition: .1s;
 }
@@ -325,4 +315,66 @@ hr {
 
 .history .time {
    color: #444;
+}
+
+/* So it won't hurt your eyes ;) */
+@media (prefers-color-scheme: dark) {
+   .settingHeaderTxt {
+      color: #fff;
+   }
+   .suggestion-element {
+      border-color: #404040;
+      border-left: solid .4em #525252;
+      background-color: #262626;
+   }
+   .suggestion-element:hover {
+      border-color: #aaa;
+      padding-left: 1.3em;
+      transform: scale(1.1);
+   }
+   .suggestion-element:hover {
+      border-color: #a3a3a3;
+   }
+   .completed-activity-summary-icon {
+      color: #aaa;
+   }
+   .settingTxt {
+      color: #ddd;
+   }
+   .avgtimetxt {
+      color: #ddd;
+   }
+   .activity {
+      box-shadow: 0 0.1em 0.3em #000;
+   }
+   .avgtimeblock {
+      border-color: #ddd;
+   }
+   button {
+      color: #eee;
+      border-color: #eee;
+   }
+   button:hover {
+      color: #222;
+      background-color: #eee;
+   }
+   button:focus {
+      box-shadow: 0 0 0 0.2em #000;
+   }
+   fieldset {
+      border-color: #444;
+   }
+   legend {
+      background-color: #444;
+      color: #eee;
+   }
+   * {
+      color: #eee;
+   }
+   input:focus {
+      box-shadow: 0 0 0 0.2em #000;
+   }
+   .history .time {
+      color: #aaa;
+   }
 }

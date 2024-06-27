@@ -11,7 +11,6 @@
 - Rename tasks
 - Setting to continue tasks when tab is closed
 - Filter through suggestions as you type
-- dark theme
 - more graphs
 - move navigation to top at small screen sizes
 

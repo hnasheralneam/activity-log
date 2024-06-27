@@ -12,29 +12,29 @@
    <script src="https://hnasheralneam.github.io/digit/v0.3.0.js"></script>
    <title>Activity Log</title>
 </head>
-<body class="bg-gray-200">
-   <div class="nav bg-gray-100">
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('main')" title="home">
+<body class="bg-gray-200 dark:bg-black">
+   <div class="nav bg-gray-100 dark:bg-neutral-900">
+      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('main')" title="home">
          <span class="material-symbols-rounded">home</span>
       </div>
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
+      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
          <span class="material-symbols-rounded">bar_chart</span>
       </div>
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('history')" title="history">
+      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('history')" title="history">
          <span class="material-symbols-rounded">history</span>
       </div>
-      <div class="nav-icon hover:shadow-md flex" onclick="displayPage('settings')" title="settings">
+      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('settings')" title="settings">
          <span class="material-symbols-rounded">settings</span>
       </div>
    </div>
-   <div class="content-parent">
-      <div class="content shadow-sm">
+   <div class="content-parent bg-white dark:bg-black">
+      <div class="content shadow-sm dark:bg-neutral-900">
          <div class="page main page-active">
             <div class="page-inner grid grid-cols-2">
                <fieldset>
                   <legend>Start a new activity</legend>
                   <div class="w-full grid" style="grid-template-columns: 70% 30%">
-                     <input class="newActivity" onkeyup="textentered()" type="text" placeholder="your new activity...">
+                     <input class="newActivity dark:bg-neutral-700" onkeyup="textentered()" type="text" placeholder="your new activity...">
                      <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>   
                   </div>
                   <br>
