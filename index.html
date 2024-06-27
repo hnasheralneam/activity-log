@@ -13,27 +13,27 @@
    <title>Activity Log</title>
 </head>
 <body class="bg-gray-200 dark:bg-black">
-   <div class="nav bg-gray-100 dark:bg-neutral-900">
-      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('main')" title="home">
+   <div class="nav bg-gray-100 dark:bg-neutral-800">
+      <div class="nav-icon bg-white dark:bg-neutral-700 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('main')" title="home">
          <span class="material-symbols-rounded">home</span>
       </div>
-      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
+      <div class="nav-icon bg-white dark:bg-neutral-700 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('stats')" title="stats">
          <span class="material-symbols-rounded">bar_chart</span>
       </div>
-      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('history')" title="history">
+      <div class="nav-icon bg-white dark:bg-neutral-700 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('history')" title="history">
          <span class="material-symbols-rounded">history</span>
       </div>
-      <div class="nav-icon bg-white dark:bg-neutral-800 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('settings')" title="settings">
+      <div class="nav-icon bg-white dark:bg-neutral-700 dark:text-gray-100 hover:shadow-md flex" onclick="displayPage('settings')" title="settings">
          <span class="material-symbols-rounded">settings</span>
       </div>
    </div>
    <div class="content-parent bg-white dark:bg-black">
       <div class="content shadow-sm dark:bg-neutral-900">
          <div class="page main page-active">
-            <div class="page-inner grid grid-cols-2">
+            <div class="page-inner grid grid-cols-2 main-page-inner">
                <fieldset>
                   <legend>Start a new activity</legend>
-                  <div class="w-full grid" style="grid-template-columns: 70% 30%">
+                  <div class="new-activity-container w-full grid">
                      <input class="newActivity dark:bg-neutral-700" onkeyup="textentered()" type="text" placeholder="your new activity...">
                      <button class="newActivityBtn" onclick="newActivity()" disabled>Start new activity</button>   
                   </div>
@@ -108,7 +108,6 @@
                <div class="settingsections">
                   <h2 class="settingHeaderTxt">Collapse Options</h2>
                   <p>Choose how to collapse your completed tasks:</p>
-                  <button onclick="saveCollapseSettings()">Save settings</button>
                   <section class="collapsesettingsparent">
                      <div>
                         <input type="radio" id="long" name="collapsesettings" value="long">
@@ -123,6 +122,7 @@
                         <label for="none">None</label>
                      </div>
                   </section>
+                  <button onclick="saveCollapseSettings()">Save settings</button>
                </div>
             </fieldset>
          </div>

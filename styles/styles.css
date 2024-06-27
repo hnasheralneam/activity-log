@@ -122,6 +122,10 @@ button:disabled {
    box-shadow: none;
 }
 
+button:disabled:active {
+   transform: none;
+}
+
 
 /* Specific Styles */
 .activity {
@@ -271,18 +275,7 @@ hr {
    max-width: 45vw;
 }
 
-/* Layout */
-@media screen and (max-width: 900px) {
-   .page-inner {
-      grid-template-columns: 100%;
-   }
-   .history-items {
-      grid-template-columns: 100%;
-   }
-   #myChart {
-      max-width: 90vw;
-   }
-}
+
 
 .redo-activty-icon {
    transition: .1s;
@@ -317,6 +310,82 @@ hr {
    color: #444;
 }
 
+.new-activity-container {
+   grid-template-columns: 70% 30%;
+}
+
+
+/* Layout */
+@media screen and (max-width: 900px) {
+   body {
+      grid-template-columns: 100%;
+      grid-template-rows: 70px auto;
+   }
+   .nav {
+      height: 70px;
+      width: 100vw;
+      border-radius: 0;
+      text-align: center;
+   }
+   .nav-icon {
+      display: inline-flex;
+   }
+   .content {
+      border-radius: 0;
+   }
+   .content-parent {
+      height: calc(100vh - 70px);
+      padding: 0;
+   }
+   .page {
+      padding: .5rem;
+   }
+   .page-inner {
+      grid-template-columns: 100%;
+   }
+   .history-items {
+      grid-template-columns: 100%;
+   }
+   #myChart {
+      max-width: 90vw;
+   }
+   .settingsblock button {
+      position: static;
+      margin: .6rem auto;
+      align-self: right;
+   }
+   fieldset {
+      margin: none;
+      padding: 0;
+      border: none;
+   }
+   .activity {
+      margin: .5rem 0;
+      padding: .6rem 1rem;
+   }
+   .main-page-inner {
+      display: flex;
+      flex-direction: column-reverse;
+   }
+   .suggestion-element {
+      margin: .6rem 0;
+      padding: .8rem;
+   }
+   .suggestion-element span {
+      top: .5em;
+      right: .5em;
+   }
+   .new-activity-container {
+      grid-template-columns: 100%;
+   }
+   .newActivity {
+      margin: .4rem 0;
+   }
+   legend {
+      margin-bottom: .4rem;
+   }
+}
+
 /* So it won't hurt your eyes ;) */
 @media (prefers-color-scheme: dark) {
    .settingHeaderTxt {
@@ -345,7 +414,8 @@ hr {
       color: #ddd;
    }
    .activity {
-      box-shadow: 0 0.1em 0.3em #000;
+      background-color: #222;
+      box-shadow: 0 0.1em 0.3em #111;
    }
    .avgtimeblock {
       border-color: #ddd;
