@@ -2,10 +2,6 @@
 // Ideas and Plans
 // ==========================================
 
------bugs-----
-- Multiple tabs mess with save
-
-
 -----features-----
 - create easy way to add time later (set start finish times, length)
 - Rename tasks
